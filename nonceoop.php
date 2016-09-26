@@ -6,9 +6,11 @@
 
 	class NonceOOP {
 
-		private $action   = '';
-		private $name     = 'oop_nonce';
-		private $lifetime = DAY_IN_SECONDS;
+		private $action    = '';
+		private $name      = 'oop_nonce';
+		private $lifetime  = DAY_IN_SECONDS;
+		private $autocheck = true;
+		private $callback  = 'You are not allowed to do this.';
 
 		/**
 		 * Initialize NonceOOP
@@ -21,32 +23,50 @@
 		 *
 		 * @return (boolean) `true`
 		 **/
-		function __construct( $new_action = '', $new_name = 'oop_nonce', $autocheck = true, $callback = 'You are not allowed to do this.' ) {
-			$this->action = $new_action;
-			$this->name   = $new_name;
+		function __construct( $new_action = '', $new_name = 'oop_nonce', $new_autocheck = true, $new_callback = 'You are not allowed to do this.' ) {
+			$this->action    = $new_action;
+			$this->name      = $new_name;
+			$this->autocheck = $new_autocheck;
+			$this->callback  = $new_callback;
 
 			//If we handle the validation automatically and a nonce request is found, we start validation
-			if ( $autocheck && ! empty ( $_REQUEST[ $this->name ] ) ) {
-
-				//Check the nonce
-				$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
-
-				if ( ! $is_valid ) {
-					
-					if ( !is_callable( $callback ) ) {
-
-						//If $callback contains the error message, we exit with `wp_die()`
-						wp_die(	$callback );
-					} else {
-
-						//If $callback contains a callable function, we exeute the function.
-						//The current object will be given as parameter.
-						call_user_func_array( $callback, array( $this ) );
-					}
-				}
+			if ( $this->autocheck && ! empty ( $_REQUEST[ $this->name ] ) ) {
+				add_action( 'init', array( $this, 'autocheck' ) );
 			}
 
 			return true;
+		}
+
+		/**
+		 * Checks the current $_REQUEST if a nonce exists and if its valid. If is is not valid, `wp_die()` will be executed or a defined callback function.
+		 *
+		 * @return (boolean) `false` indicates the nonce was not valid. `true` indicates, the nonce was valid or no nonce was found in the $_REQUEST.
+		 **/
+		function autocheck() {
+			//Check if the $REQUEST contains a nonce
+			if ( empty( $_REQUEST[ $this->name ] ) ) {
+				return true;
+			}
+
+			//Check the nonce
+			$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
+
+			if ( $is_valid ) {
+				return true;
+			}
+
+			if ( !is_callable( $this->callback ) ) {
+
+				//If $callback contains the error message, we exit with `wp_die()`
+				wp_die(	$this->callback );
+			} else {
+
+				//If $callback contains a callable function, we exeute the function.
+				//The current object will be given as parameter.
+				call_user_func_array( $this->callback, array( $this ) );
+			}
+			
+			return false;
 		}
 
 		/**
