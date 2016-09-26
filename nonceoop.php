@@ -31,7 +31,7 @@
 
 			//If we handle the validation automatically and a nonce request is found, we start validation
 			if ( $this->autocheck && ! empty ( $_REQUEST[ $this->name ] ) ) {
-				add_action( 'init', array( $this, 'autocheck' ) );
+				add_action( 'init', array( $this, 'check_request' ) );
 			}
 
 			return true;
@@ -42,7 +42,7 @@
 		 *
 		 * @return (boolean) `false` indicates the nonce was not valid. `true` indicates, the nonce was valid or no nonce was found in the $_REQUEST.
 		 **/
-		function autocheck() {
+		function check_request() {
 			//Check if the $REQUEST contains a nonce
 			if ( empty( $_REQUEST[ $this->name ] ) ) {
 				return true;
@@ -149,12 +149,12 @@
 		/**
 		 * Creates an hidden input field with the nonce.
 		 *
-		 * @param (boolean) $referer Wheter the referer should be placed. Default: `false`
+		 * @param (boolean) $referer Wheter the referer should be placed. Default: `true`
 		 * @param (boolean) $echo    Wheter the input field should be returned (`false`) or echoed (`true`). Default: `false`
 		 *
 		 * @return (string|boolean) Returns the HTML string or true in case the string gets echoed.
 		 **/
-		function nonce_field( $referer = false, $echo = false ) {
+		function nonce_field( $referer = true, $echo = false ) {
 			$html = wp_nonce_field( $this->action, $this->name, $referer, false );
 
 			if ( ! $echo ) {
