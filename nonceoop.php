@@ -45,7 +45,7 @@
 			if ( empty( $new_action ) ) {
 				_doing_it_wrong( 'NonceOOP', 'You should give a unique action.', '1.0.0' );
 			}
-			
+
 			$this->action    = $new_action;
 			$this->name      = $new_name;
 			$this->autocheck = $new_autocheck;
@@ -243,10 +243,6 @@
 		function get_url( $url ) {
 			$url = wp_nonce_url( $url, $this->action, $this->name );
 			return $url;
-		}
-
-		function nonce_ays() {
-			wp_nonce_ays( $this->get_nonce() );
 		}
 
 	}
