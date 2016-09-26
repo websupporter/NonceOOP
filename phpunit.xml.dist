@@ -7,13 +7,13 @@
     convertWarningsToExceptions="true"
     >
     <php>
-        <const name="SomePlugin\Test\DB_USER" value="PLACEHOLDER" />
-        <const name="SomePlugin\Test\DB_NAME" value="PLACEHOLDER" />
-        <const name="SomePlugin\Test\DB_PASSWORD" value="PLACEHOLDER" />
-        <const name="SomePlugin\Test\DB_HOST" value="localhost" />
-        <const name="SomePlugin\Test\DB_CHARSET" value="utf8" />
-        <const name="SomePlugin\Test\DB_COLLATE" value="" />
-        <const name="SomePlugin\Test\DB_TABLE_PREFIX" value="some_plugin_" />
+        <const name="NonceOOP\Test\DB_USER" value="PLACEHOLDER" />
+        <const name="NonceOOP\Test\DB_NAME" value="PLACEHOLDER" />
+        <const name="NonceOOP\Test\DB_PASSWORD" value="PLACEHOLDER" />
+        <const name="NonceOOP\Test\DB_HOST" value="localhost" />
+        <const name="NonceOOP\Test\DB_CHARSET" value="utf8" />
+        <const name="NonceOOP\Test\DB_COLLATE" value="" />
+        <const name="NonceOOP\Test\DB_TABLE_PREFIX" value="some_plugin_" />
     </php>
     <testsuites>
         <testsuite name="WpIntegrationTests">
