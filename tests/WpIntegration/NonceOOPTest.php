@@ -21,6 +21,17 @@ class NonceOOP_Tests extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Check get_nonce_age()
+	 **/
+	public function test_get_nonce_age() {
+		$nonce = new NonceOOP( $this->action, $this->name );
+		$get_nonce = $nonce->get_nonce();
+
+		$valid = $nonce->get_nonce_age( $get_nonce );
+		$this->assertEquals( $valid, 1 );
+	}
+
+	/**
 	 * Check if verify_nonce() validates correctly
 	 **/
 	public function test_verify_nonce() {
@@ -28,7 +39,7 @@ class NonceOOP_Tests extends WP_UnitTestCase {
 		$get_nonce = $nonce->get_nonce();
 
 		$valid = $nonce->verify_nonce( $get_nonce );
-		$this->assertEquals( $valid, 1 );
+		$this->assertTrue( $valid );
 
 		$not_valid = $nonce->verify_nonce( $get_nonce . '-failure' );
 		$this->assertFalse( $not_valid );
