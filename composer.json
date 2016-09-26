@@ -7,7 +7,6 @@
 	"version": "1.0.0",
 	"require-dev": {
 		"inpsyde/wordpress-dev": "~4.4",
-		"brain/monkey": "~1.2",
 		"inpsyde/wp-tests-starter": "~1.0"
 	}
 }
