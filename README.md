@@ -172,7 +172,7 @@ The composer.json file:
 	"repositories": [
 		{
 			"type": "vcs",
-			"url" : "/var/www/html/nonceoop/"
+			"url" : "https://github.com/websupporter/NonceOOP"
 		}
 	],
 	"require": {
