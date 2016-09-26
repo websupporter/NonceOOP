@@ -55,8 +55,8 @@
 			$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
 
 			// Since `check_ajax_referer()` and `check_admin_referer()` rely on `wp_verify_nonce()`
-			// no additional layer of security is given. But we get `wp_die()` althoug a callback
-			// function has been defined. So instead of using these functions, we just call the internal
+			// no additional layer of security is given. But we could run into `wp_die()` although a callback
+			// function has been defined. So instead of using these functions, we just call the internally
 			// used actions.
 			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 				// In case we have an ajax request, we reproduce a bit of the
