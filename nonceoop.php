@@ -111,6 +111,10 @@
 		 **/
 		function verify_nonce( $nonce ) {
 			$is_valid = wp_verify_nonce( $nonce, $this->action );
+
+			if( false !== $is_valid )
+				return true;
+
 			return $is_valid;
 		}
 
@@ -173,12 +177,12 @@
 		/**
 		 * Creates an hidden input field with the nonce.
 		 *
-		 * @param (boolean) $referer Wheter the referer should be placed. Default: `true`
+		 * @param (boolean) $referer Wheter the referer should be placed. Default: `false`
 		 * @param (boolean) $echo    Wheter the input field should be returned (`false`) or echoed (`true`). Default: `false`
 		 *
 		 * @return (string|boolean) Returns the HTML string or true in case the string gets echoed.
 		 **/
-		function get_field( $referer = true, $echo = false ) {
+		function get_field( $referer = false, $echo = false ) {
 			$html = wp_nonce_field( $this->action, $this->name, $referer, false );
 
 			if ( ! $echo ) {
