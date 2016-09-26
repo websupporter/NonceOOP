@@ -44,7 +44,7 @@
 		 **/
 		function check_request() {
 			//Check if the $REQUEST contains a nonce
-			if ( empty( $_REQUEST[ $this->name ] ) ) {
+			if ( ! isset( $_REQUEST[ $this->name ] ) ) {
 				return true;
 			}
 
@@ -64,6 +64,11 @@
 				//If $callback contains a callable function, we exeute the function.
 				//The current object will be given as parameter.
 				call_user_func_array( $this->callback, array( $this ) );
+			}
+
+			//Check the referer field if given
+			if( isset( $_REQUEST['_wp_http_referer'] ) ) {
+
 			}
 			
 			return false;
@@ -154,7 +159,7 @@
 		 *
 		 * @return (string|boolean) Returns the HTML string or true in case the string gets echoed.
 		 **/
-		function nonce_field( $referer = true, $echo = false ) {
+		function get_field( $referer = true, $echo = false ) {
 			$html = wp_nonce_field( $this->action, $this->name, $referer, false );
 
 			if ( ! $echo ) {
@@ -164,6 +169,18 @@
 			echo $html;
 
 			return true;
+		}
+
+		/**
+		 * Adds the nonce to a given URL
+		 *
+		 * @param (string) $url The URL where the nonce should be added to.
+		 *
+		 * @return (string) $url The URL with the nonce parameter
+		 **/
+		function get_url( $url ) {
+			$url = wp_nonce_url( $url, $this->action, $this->name );
+			return $url;
 		}
 
 	}
