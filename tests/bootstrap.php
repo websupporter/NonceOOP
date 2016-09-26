@@ -3,7 +3,8 @@
 namespace NonceOOP\Test;
 
 use
-     WpTestsStarter\WpTestsStarter;
+	NonceOOP\NonceOOP,
+	WpTestsStarter\WpTestsStarter;
 
 /**
  * require composers autoload file, if it exists

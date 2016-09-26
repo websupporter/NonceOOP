@@ -1,5 +1,5 @@
 <?php
-	namespace Websupporter\NonceOOP;
+	namespace NonceOOP;
 	/**
 	 * NonceOOP
 	 * This library helps you to use WordPress Nonces in an objectoriented environment.

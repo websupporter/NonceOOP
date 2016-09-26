@@ -1,7 +1,6 @@
 <?php
 
-use
-	WP_UnitTestCase;
+use	WP_UnitTestCase;
 
 class NonceOOP_Tests extends WP_UnitTestCase {
 
