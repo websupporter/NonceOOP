@@ -29,7 +29,7 @@
 			$this->autocheck = $new_autocheck;
 			$this->callback  = $new_callback;
 
-			//If we handle the validation automatically and a nonce request is found, we start validation
+			// If we handle the validation automatically and a nonce request is found, we start validation
 			if ( $this->autocheck && ! empty ( $_REQUEST[ $this->name ] ) ) {
 				add_action( 'init', array( $this, 'check_request' ) );
 			}
@@ -43,12 +43,12 @@
 		 * @return (boolean) `false` indicates the nonce was not valid. `true` indicates, the nonce was valid or no nonce was found in the $_REQUEST.
 		 **/
 		function check_request() {
-			//Check if the $REQUEST contains a nonce
+			// Check if the $REQUEST contains a nonce
 			if ( ! isset( $_REQUEST[ $this->name ] ) ) {
 				return true;
 			}
 
-			//Check the nonce
+			// Check the nonce
 			$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
 
 			// Since `check_ajax_referer()` and `check_admin_referer()` rely on `wp_verify_nonce()`
@@ -56,13 +56,13 @@
 			// function has been defined. So instead of using these functions, we just call the internal
 			// used actions.
 			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-				//In case we have an ajax request, we reproduce a bit of the
-				//check_ajax_referer()
+				// In case we have an ajax request, we reproduce a bit of the
+				// check_ajax_referer()
 
 				/* This action is documented in wp-includes/pluggable.php */
 				do_action( 'check_ajax_referer', $this->action, $is_valid );
 			} elseif ( is_admin() ) {
-				//In case we are in the admin, we reproduce a bit of the check_admin_referer()
+				// In case we are in the admin, we reproduce a bit of the check_admin_referer()
 
 				/* This action is documented in wp-includes/pluggable.php */
 				do_action( 'check_admin_referer', $this->action, $is_valid );
@@ -73,20 +73,20 @@
 			}
 
 			if ( !is_callable( $this->callback ) ) {
-				//Check for ajax
+				// Check for ajax
 				if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-					//In case we have an ajax request, we reproduce a bit of the
-					//check_ajax_referer()
+					// In case we have an ajax request, we reproduce a bit of the
+					// check_ajax_referer()
 
 					wp_die( -1 );
 				}
 
-				//If $callback contains the error message, we exit with `wp_die()`
+				// If $callback contains the error message, we exit with `wp_die()`
 				wp_die(	$this->callback );
 			} else {
 
-				//If $callback contains a callable function, we exeute the function.
-				//The current object will be given as parameter.
+				// If $callback contains a callable function, we exeute the function.
+				// The current object will be given as parameter.
 				call_user_func_array( $this->callback, array( $this ) );
 			}
 			
