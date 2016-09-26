@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * NonceOOP
-	 * This library helps you to use WordPress Nonces in an objectoriented environment
+	 * This library helps you to use WordPress Nonces in an objectoriented environment.
 	 **/
 
 	class NonceOOP {
@@ -51,11 +51,35 @@
 			//Check the nonce
 			$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
 
+			// Since `check_ajax_referer()` and `check_admin_referer()` rely on `wp_verify_nonce()`
+			// no additional layer of security is given. But we get `wp_die()` althoug a callback
+			// function has been defined. So instead of using these functions, we just call the internal
+			// used actions.
+			if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+				//In case we have an ajax request, we reproduce a bit of the
+				//check_ajax_referer()
+
+				/* This action is documented in wp-includes/pluggable.php */
+				do_action( 'check_ajax_referer', $this->action, $is_valid );
+			} elseif ( is_admin() ) {
+				//In case we are in the admin, we reproduce a bit of the check_admin_referer()
+
+				/* This action is documented in wp-includes/pluggable.php */
+				do_action( 'check_admin_referer', $this->action, $is_valid );
+			}
+
 			if ( $is_valid ) {
 				return true;
 			}
 
 			if ( !is_callable( $this->callback ) ) {
+				//Check for ajax
+				if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+					//In case we have an ajax request, we reproduce a bit of the
+					//check_ajax_referer()
+
+					wp_die( -1 );
+				}
 
 				//If $callback contains the error message, we exit with `wp_die()`
 				wp_die(	$this->callback );
