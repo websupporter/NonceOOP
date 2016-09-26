@@ -1,9 +1,10 @@
 {
-	"name" : "nonceoop",
+	"name" : "websupporter/nonceoop",
 	"type" : "library",
 	"require": {
 		"php": ">=5.4.0"
 	},
+	"version": "1.0.0",
 	"require-dev": {
 		"inpsyde/wordpress-dev": "~4.4",
 		"brain/monkey": "~1.2",
