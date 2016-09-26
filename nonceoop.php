@@ -125,6 +125,20 @@
 		}
 
 		/**
+		 * Get the age of a nonce
+		 *
+		 * @return (boolean|numeric) $age Whether the nonce is "young" (1), "old" (2) or invalid (false).
+		 *                           "young" usually means 0 - 12 hours
+		 *                           "old" usually means 12 - 24 hours
+		 *                           it depends on the nonce lifetime
+		 **/
+		function get_nonce_age( $nonce ) {
+			$age = wp_verify_nonce( $nonce, $this->action );
+
+			return $age;
+		}
+
+		/**
 		 * Set the Nonce action
 		 *
 		 * @param (string) $new_action The new action

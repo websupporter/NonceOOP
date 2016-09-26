@@ -145,6 +145,9 @@ The usual behavior on a failed validation is to execute `wp_die()` or the callba
 ### `nonce_life( $Lifetime )`
 Is hooked into the filter `nonce_life` in case `set_lifetime()` was called.
 
+### `get_nonce_age( $nonce )`
+Returns `false` if the nonce is invalid. 1 indicates a yound nonce (0-12 hrs), 2 indicates on old nonce (12-24 hrs).
+
 ## The callback function
 ```
 function callback( $object ) {
