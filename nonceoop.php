@@ -65,11 +65,6 @@
 				//The current object will be given as parameter.
 				call_user_func_array( $this->callback, array( $this ) );
 			}
-
-			//Check the referer field if given
-			if( isset( $_REQUEST['_wp_http_referer'] ) ) {
-
-			}
 			
 			return false;
 		}
