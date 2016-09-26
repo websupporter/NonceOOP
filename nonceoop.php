@@ -7,10 +7,46 @@
 	class NonceOOP {
 
 		private $action   = '';
+		private $name     = 'oop_nonce';
 		private $lifetime = DAY_IN_SECONDS;
 
-		function __construct( $new_action = '' ) {
+		/**
+		 * Initialize NonceOOP
+		 *
+		 * @param (string)  $new_action The action.
+		 * @param (string)  $new_name   The name for the $_REQUEST.
+		 * @param (boolean) $autocheck  Whether to automatically check $_REQUEST if a nonce is currently send.
+		 * @param (string)  $callback   If this string is callable, the function will be executed if the validation fails.
+		 *                              Otherwise, the string is used as the error message inside of `wp_die()`.
+		 *
+		 * @return (boolean) `true`
+		 **/
+		function __construct( $new_action = '', $new_name = 'oop_nonce', $autocheck = true, $callback = 'You are not allowed to do this.' ) {
 			$this->action = $new_action;
+			$this->name   = $new_name;
+
+			//If we handle the validation automatically and a nonce request is found, we start validation
+			if ( $autocheck && ! empty ( $_REQUEST[ $this->name ] ) ) {
+
+				//Check the nonce
+				$is_valid = $this->verify_nonce( $_REQUEST[ $this->name ] );
+
+				if ( ! $is_valid ) {
+					
+					if ( !is_callable( $callback ) ) {
+
+						//If $callback contains the error message, we exit with `wp_die()`
+						wp_die(	$callback );
+					} else {
+
+						//If $callback contains a callable function, we exeute the function.
+						//The current object will be given as parameter.
+						call_user_func_array( $callback, array( $this ) );
+					}
+				}
+			}
+
+			return true;
 		}
 
 		/**
@@ -88,6 +124,26 @@
 		 **/
 		function nonce_life( $lifetime ) {
 			return $this->lifetime;
+		}
+
+		/**
+		 * Creates an hidden input field with the nonce.
+		 *
+		 * @param (boolean) $referer Wheter the referer should be placed. Default: `false`
+		 * @param (boolean) $echo    Wheter the input field should be returned (`false`) or echoed (`true`). Default: `false`
+		 *
+		 * @return (string|boolean) Returns the HTML string or true in case the string gets echoed.
+		 **/
+		function nonce_field( $referer = false, $echo = false ) {
+			$html = wp_nonce_field( $this->action, $this->name, $referer, false );
+
+			if ( ! $echo ) {
+				return $html;
+			}
+
+			echo $html;
+
+			return true;
 		}
 
 	}
