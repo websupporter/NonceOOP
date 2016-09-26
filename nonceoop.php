@@ -45,6 +45,7 @@
 			if ( empty( $new_action ) ) {
 				_doing_it_wrong( 'NonceOOP', 'You should give a unique action.', '1.0.0' );
 			}
+			
 			$this->action    = $new_action;
 			$this->name      = $new_name;
 			$this->autocheck = $new_autocheck;
@@ -93,7 +94,7 @@
 				return true;
 			}
 
-			if ( !is_callable( $this->callback ) ) {
+			if ( ! is_callable( $this->callback ) ) {
 				// Check for ajax
 				if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 					// In case we have an ajax request, we reproduce a bit of the
@@ -136,8 +137,9 @@
 			// `wp_verify_nonce()` returns 1, 2 or `false`. 1 is indicating a "young" nonce, 
 			// 2 is indicating an "old" nonce and false an invalid. 
 			// We just want to know, if the nonce is valid.
-			if( false !== $is_valid )
+			if ( false !== $is_valid ) {
 				return true;
+			}
 
 			return $is_valid;
 		}
@@ -152,7 +154,6 @@
 		 **/
 		function get_nonce_age( $nonce ) {
 			$age = wp_verify_nonce( $nonce, $this->action );
-
 			return $age;
 		}
 
@@ -242,6 +243,10 @@
 		function get_url( $url ) {
 			$url = wp_nonce_url( $url, $this->action, $this->name );
 			return $url;
+		}
+
+		function nonce_ays() {
+			wp_nonce_ays( $this->get_nonce() );
 		}
 
 	}
