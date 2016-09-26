@@ -24,6 +24,9 @@
 		 * @return (boolean) `true`
 		 **/
 		function __construct( $new_action = '', $new_name = 'oop_nonce', $new_autocheck = true, $new_callback = 'You are not allowed to do this.' ) {
+			if ( empty( $new_action ) ) {
+				_doing_it_wrong( 'NonceOOP', 'You should give a unique action', '1.0.0' );
+			}
 			$this->action    = $new_action;
 			$this->name      = $new_name;
 			$this->autocheck = $new_autocheck;
