@@ -11,8 +11,6 @@ use
  */
 $base_dir = dirname( __DIR__ );
 
-require_once( dirname( __DIR__ ) . '/nonceoop.php' );
-
 $autoload_file = "{$base_dir}/vendor/autoload.php";
 if ( file_exists( $autoload_file ) ) {
     /**
