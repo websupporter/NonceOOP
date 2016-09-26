@@ -9,8 +9,8 @@
 		private $action   = '';
 		private $lifetime = DAY_IN_SECONDS;
 
-		function __construct() {
-
+		function __construct( $new_action = '' ) {
+			$this->action = $new_action;
 		}
 
 		/**
