@@ -1,10 +1,8 @@
 <?php // tests/bootstrap.php
 
-namespace NonceOOP\Test;
+namespace NonceOOPTest;
 
-use
-	NonceOOP\NonceOOP,
-	WpTestsStarter\WpTestsStarter;
+use WpTestsStarter\WpTestsStarter;
 
 /**
  * require composers autoload file, if it exists

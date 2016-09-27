@@ -22,7 +22,7 @@
 	 * You should have received a copy of the GNU General Public License
 	 * along with NonceOOP. If not, see https://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
 	 **/
-
+	
 	class NonceOOP {
 
 		private $action    = '';
