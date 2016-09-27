@@ -1,4 +1,5 @@
 <?php
+	namespace NonceOOP;
 	/**
 	 * NonceOOP
 	 * This library helps you to use WordPress Nonces in an objectoriented environment.
@@ -21,7 +22,7 @@
 	 * You should have received a copy of the GNU General Public License
 	 * along with NonceOOP. If not, see https://www.gnu.org/licenses/old-licenses/gpl-2.0.html.
 	 **/
-
+	
 	class NonceOOP {
 
 		private $action    = '';
@@ -134,7 +135,7 @@
 		function verify_nonce( $nonce ) {
 			$is_valid = wp_verify_nonce( $nonce, $this->action );
 
-			// `wp_verify_nonce()` returns 1, 2 or `false`. 1 is indicating a "young" nonce, 
+			// `wp_verify_nonce()` returns 1, 2 or `false`. 1 is indicating a "young" nonce,
 			// 2 is indicating an "old" nonce and false an invalid. 
 			// We just want to know, if the nonce is valid.
 			if ( false !== $is_valid ) {

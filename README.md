@@ -22,7 +22,8 @@ If it wouldn't be populated with the correct nonce, `wp_die()` would be executed
  * Plugin Name: Test NonceOOP
  **/
 
-require_once( __DIR__ . '/vendor/websupporter/nonceoop/nonceoop.php' );
+use NonceOOP\NonceOOP;
+require_once __DIR__ . '/vendor/autoload.php';
 
 
 class Test extends NonceOOP {
@@ -50,13 +51,13 @@ You have some options to configure the behavior.
 ### Disable the automatic check
 If you do not want NonceOOP to automatically check the `$_REQUEST` you can disable this behavior:
 ```
-$nonce = new  NonceOOP( 'action', 'request', false );
+$nonce = new NonceOOP( 'action', 'request', false );
 ```
 
 ### Define your own error message
 If you want to alter the automatic error message NonceOOP is using:
 ```
-$nonce = new  NonceOOP( 'action', 'request', true, 'Another error message is displayed.' );
+$nonce = new NonceOOP( 'action', 'request', true, 'Another error message is displayed.' );
 ```
 Now, the error message "Another error message is displayed." would be displayed in the `wp_die()`.
 
@@ -65,11 +66,11 @@ You might not want to use `wp_die()`, but rely on the automatic detection. Inste
 
 *Examples*
 ```
-$nonce = new  NonceOOP( 'action', 'request', true, function( $t ) { error_log() } );
+$nonce = new NonceOOP( 'action', 'request', true, function( $t ) { error_log() } );
 ```
 
 ```
-$nonce = new  NonceOOP( 'action', 'request', true, array( $this, 'callback_function' ) );
+$nonce = new NonceOOP( 'action', 'request', true, array( $this, 'callback_function' ) );
 ```
 
 ```
@@ -77,7 +78,7 @@ function callback() {
 	echo 'Nono';
     exit;
 }
-$nonce = new  NonceOOP( 'action', 'request', true, 'callback' );
+$nonce = new NonceOOP( 'action', 'request', true, 'callback' );
 ```
 
 ## Functions
@@ -103,7 +104,8 @@ Nonces are usually valid for 24 hours. You can define a new lifetime in seconds 
  * Plugin Name: Test NonceOOP
  **/
 
-require_once( __DIR__ . '/vendor/websupporter/nonceoop/nonceoop.php' );
+use NonceOOP\NonceOOP;
+require_once __DIR__ . '/vendor/autoload.php';
 
 
 class Test extends NonceOOP {

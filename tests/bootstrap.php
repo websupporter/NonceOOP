@@ -1,17 +1,14 @@
 <?php // tests/bootstrap.php
 
-namespace NonceOOP\Test;
+namespace NonceOOPTest;
 
-use
-     WpTestsStarter\WpTestsStarter;
+use WpTestsStarter\WpTestsStarter;
 
 /**
  * require composers autoload file, if it exists
  * __DIR__ points to the tests/ directroy
  */
 $base_dir = dirname( __DIR__ );
-
-require_once( dirname( __DIR__ ) . '/nonceoop.php' );
 
 $autoload_file = "{$base_dir}/vendor/autoload.php";
 if ( file_exists( $autoload_file ) ) {
