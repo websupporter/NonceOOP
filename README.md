@@ -181,7 +181,7 @@ The composer.json file:
 		}
 	],
 	"require": {
-		"websupporter/nonceoop" : "dev-master"
+		"websupporter/nonceoop" : "1.0.*"
 	}
 }
 ```
